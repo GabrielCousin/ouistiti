@@ -1,0 +1,35 @@
+doctype html  
+html(lang='fr') 
+  head
+    title= 'Ouistiti'
+    meta(charset='utf-8')
+    meta(http-equiv='x-ua-compatible' content='ie=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover')
+    link(href='/assets/style.css', rel='stylesheet')
+    link(rel='icon', href='/assets/favicon.ico')
+  body(class='body')
+    header(class='header')
+      div(class='logo')
+      nav(class='nav', data-name='nav', data-status='idle')
+        div(class='cameraCountdown')
+          span(class='cameraCountdown-time') 3
+          span(class='cameraCountdown-time') •
+          span(class='cameraCountdown-time') 2
+          span(class='cameraCountdown-time') •
+          span(class='cameraCountdown-time') 1
+        i(data-feather='refresh-cw', class='printerCountdown', width='35', height='75')
+        i(data-feather='thumbs-up', class='greating', width='35', height='75')
+        button(type='button', data-remote='A', class='btn btn__trigger', data-name='trigger_btn')
+          i(data-feather='camera', width='35', height='35')
+        button(type='button', data-remote='A', class='btn btn__print', data-name='print_btn')
+          i(data-feather='printer', width='35', height='35')
+        button(type='button', data-remote='B', class='btn btn__delete', data-name='reset_btn')
+          i(data-feather='trash', width='35', height='35')
+    div(class='wrapper')
+      = michel
+      video(data-name='stream', class='camera')
+      img(data-name='preview', class='preview is-hidden')
+      canvas(data-name='canvas')
+    script(src='/assets/script.js')
+    if isDevMode
+      script(async, src='//localhost:3001/browser-sync/browser-sync-client.js?v=2.23.6')

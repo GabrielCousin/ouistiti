@@ -1,0 +1,33 @@
+{
+  "name": "ouistiti",
+  "version": "0.1.0",
+  "description": "Photobooth powered with express.js",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "gulp build",
+    "serve": "nodemon ./index.js",
+    "print": "sh ./print.sh",
+    "serve:dev": "ENV=dev nodemon ./index.js",
+    "start:dev": "gulp"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.0.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "browser-sync": "^2.23.6",
+    "express": "^4.16.2",
+    "feather-icons": "^4.6.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^7.0.1",
+    "moment": "^2.20.1",
+    "multer": "^1.3.0",
+    "nodemon": "^1.15.1",
+    "normalize.css": "^8.0.0",
+    "postcss-easy-import": "^3.0.0",
+    "postcss-nested": "^3.0.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}
