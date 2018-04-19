@@ -34,6 +34,8 @@ function startCountdown() {
 }
 
 function takeSnapshot() {
+  video.pause()
+
   const width = video.videoWidth
   const height = video.videoHeight
   const context = hiddenCanvas.getContext('2d')
@@ -98,6 +100,7 @@ function reset() {
   if (nav.getAttribute('data-status') !== 'shoot' && nav.getAttribute('data-status') !== 'sent')
     return
 
+  video.play()
   blob = null
   nav.setAttribute('data-status', 'idle')
   image.setAttribute('src', '')
