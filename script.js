@@ -7,7 +7,7 @@ const nav = document.querySelector('[data-name=nav]')
 const video = document.querySelector('[data-name=stream]')
 const image = document.querySelector('[data-name=preview]')
 
-let blob;
+let blob
 
 feather.replace()
 
@@ -16,8 +16,8 @@ navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: 'user',
     frameRate: 30,
-    width: 1920,
-    height: 1080
+    height: { min: 720, max: 1080 },
+    aspectRatio: 1.25
   }
 }).then(function(mediaStream) {
   video.srcObject = mediaStream
