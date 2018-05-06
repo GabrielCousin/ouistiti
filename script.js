@@ -16,8 +16,9 @@ navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: 'user',
     frameRate: 30,
-    height: { min: 720, max: 1080 },
-    aspectRatio: 1.25
+    width: { min: 900, max: 1350 },
+    height: { min: 720, max: 1080 }
+    // aspectRatio: 1.25
   }
 }).then(function(mediaStream) {
   video.srcObject = mediaStream
