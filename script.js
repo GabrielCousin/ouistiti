@@ -5,7 +5,7 @@ const resetBtn = document.querySelector('[data-name=reset_btn]')
 const hiddenCanvas = document.querySelector('[data-name=canvas]')
 const nav = document.querySelector('[data-name=nav]')
 const video = document.querySelector('[data-name=stream]')
-const image = document.querySelector('[data-name=preview]')
+const watermark = document.querySelector('[data-name=watermark]')
 
 let blob
 
@@ -36,25 +36,26 @@ function startCountdown() {
 function takeSnapshot() {
   video.pause()
 
-  const width = video.videoWidth
-  const height = video.videoHeight
+  const watermarkWidth = watermark.width;
+  const watermarkHeight = watermark.height;
+  const videoWidth = video.videoWidth
+  const videoHeight = video.videoHeight
   const context = hiddenCanvas.getContext('2d')
+  const diffRatio = videoHeight / watermarkHeight
+  const targetWatermarkWidth = diffRatio === 1 ? watermarkWidth : watermarkWidth * diffRatio
 
-  hiddenCanvas.width = width
-  hiddenCanvas.height = height
-  context.drawImage(video, 0, 0, width, height)
+  hiddenCanvas.width = targetWatermarkWidth + videoWidth
+  hiddenCanvas.height = videoHeight
+  context.drawImage(watermark, 0, 0, targetWatermarkWidth, videoHeight)
+  context.drawImage(video, targetWatermarkWidth, 0, videoWidth, videoHeight)
 
   const imageDataURL = hiddenCanvas.toDataURL('image/jpeg', 1.0)
-
-  image.setAttribute('src', imageDataURL)
-  nav.setAttribute('data-status', 'shoot')
-  video.classList.add('is-hidden')
-  image.classList.remove('is-hidden')
-
   const block = imageDataURL.split(";")
   const contentType = block[0].split(":")[1]
   const realData = block[1].split(",")[1]
+
   blob = b64toBlob(realData, contentType)
+  nav.setAttribute('data-status', 'shoot')
 }
 
 function sendImage() {
@@ -103,9 +104,6 @@ function reset() {
   video.play()
   blob = null
   nav.setAttribute('data-status', 'idle')
-  image.setAttribute('src', '')
-  image.classList.add('is-hidden')
-  video.classList.remove('is-hidden')
 }
 
 function greet() {
