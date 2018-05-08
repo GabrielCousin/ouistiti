@@ -142,10 +142,10 @@ triggerBtn.addEventListener('click', startCountdown)
 resetBtn.addEventListener('click', reset)
 
 document.addEventListener('keypress', function (event) {
-  if (event.keyCode === 97)
+  if (event.code === 'KeyQ')
     validate()
 
-  if (event.keyCode === 98)
+  if (event.code === 'KeyB')
     reset()
 })
 
