@@ -13,6 +13,7 @@ body {
 *::before,
 *:after {
   box-sizing: border-box;
+  cursor: none;
 }
 
 [data-name="watermark"],
@@ -79,6 +80,7 @@ body {
   text-align: center;
   border: 1px solid gray;
   position: relative;
+  cursor: none;
 
   &[data-remote]:after {
     content: attr(data-remote);
