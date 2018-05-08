@@ -28,8 +28,15 @@ body {
   overflow: hidden;
 }
 
-.camera {
+.cameraWrapper {
   flex: none;
+  display: flex;
+  justify-content: center;
+  width: 150vh;
+  overflow: hidden;
+}
+
+.camera {
   width: auto;
   height: 100%;
   transform: scale(-1, 1);
@@ -49,7 +56,7 @@ body {
   background-image: url('/assets/logo.svg');
   background-position: center;
   background-repeat: no-repeat;
-  padding-bottom: 40%;
+  padding-bottom: 45%;
   width: 100%;
 }
 

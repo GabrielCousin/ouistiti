@@ -7,27 +7,32 @@ const nav = document.querySelector('[data-name=nav]')
 const video = document.querySelector('[data-name=stream]')
 const watermark = document.querySelector('[data-name=watermark]')
 
+const targetAspectRatio = 1.5
+const watermarkRatio = .2
+
 let blob
+let videoWidth
+let videoHeight
+let watermarkDiameter
+let videoOffsetX
+let watermarkOffsetX
+let watermarkOffsetY
 
 feather.replace()
 
-navigator.mediaDevices.getUserMedia({
-  audio: false,
-  video: {
-    facingMode: 'user',
-    frameRate: 30,
-    width: { min: 900, max: 1350 },
-    height: { min: 720, max: 1080 }
-    // aspectRatio: 1.25
-  }
-}).then(function(mediaStream) {
-  video.srcObject = mediaStream
-  video.onloadedmetadata = function() {
-    video.play()
-  }
-}).catch(function(err) {
-  console.error(`🙈  [Camera] ${err.name}: ${err.message}`)
-})
+function initBooth() {
+  video.play()
+  videoWidth = video.videoWidth
+  videoHeight = video.videoHeight
+  watermarkDiameter = videoHeight * .2
+
+  hiddenCanvas.height = videoHeight
+  hiddenCanvas.width = videoHeight * targetAspectRatio
+
+  videoOffsetX = (hiddenCanvas.width - videoWidth) / 2
+  watermarkOffsetX = hiddenCanvas.width - watermarkDiameter - 50
+  watermarkOffsetY = hiddenCanvas.height - watermarkDiameter - 50
+}
 
 function startCountdown() {
   nav.setAttribute('data-status', 'countdown')
@@ -37,18 +42,11 @@ function startCountdown() {
 function takeSnapshot() {
   video.pause()
 
-  const watermarkWidth = watermark.width;
-  const watermarkHeight = watermark.height;
-  const videoWidth = video.videoWidth
-  const videoHeight = video.videoHeight
   const context = hiddenCanvas.getContext('2d')
-  const diffRatio = videoHeight / watermarkHeight
-  const targetWatermarkWidth = diffRatio === 1 ? watermarkWidth : watermarkWidth * diffRatio
 
-  hiddenCanvas.width = targetWatermarkWidth + videoWidth
-  hiddenCanvas.height = videoHeight
-  context.drawImage(watermark, 0, 0, targetWatermarkWidth, videoHeight)
-  context.drawImage(video, targetWatermarkWidth, 0, videoWidth, videoHeight)
+  context.imageSmoothingQuality = "high"
+  context.drawImage(video, videoOffsetX, 0, videoWidth, videoHeight)
+  context.drawImage(watermark, watermarkOffsetX, watermarkOffsetY, watermarkDiameter, watermarkDiameter)
 
   const imageDataURL = hiddenCanvas.toDataURL('image/jpeg', 1.0)
   const block = imageDataURL.split(";")
@@ -123,6 +121,21 @@ function validate() {
       sendImage()
   }
 }
+
+navigator.mediaDevices.getUserMedia({
+  audio: false,
+  video: {
+    facingMode: 'user',
+    frameRate: 30,
+    width: 1920,
+    height: 1080
+  }
+}).then(function(mediaStream) {
+  video.srcObject = mediaStream
+  video.onloadedmetadata = initBooth
+}).catch(function(err) {
+  console.error(`🙈  [Camera] ${err.name}: ${err.message}`)
+})
 
 printBtn.addEventListener('click', sendImage)
 triggerBtn.addEventListener('click', startCountdown)
