@@ -27,6 +27,6 @@
     "normalize.css": "^8.0.0",
     "postcss-easy-import": "^3.0.0",
     "postcss-nested": "^3.0.0",
-    "pug": "^2.0.0-rc.4"
+    "pug": "^3.0.1"
   }
 }
