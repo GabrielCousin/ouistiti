@@ -40,7 +40,6 @@ $ yarn print
 ## Installation
 ```bash
 $ yarn
-$ mkdir public uploads
 $ yarn start
 ```
 
@@ -56,5 +55,5 @@ $ yarn print
 
 ## Customization
 Add following files in /public:
-* logo.svg
+* watermark.png
 * favicon.ico

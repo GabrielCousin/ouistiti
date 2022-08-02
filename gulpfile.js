@@ -1,50 +1,51 @@
-const gulp = require('gulp')
+const { dest, src, parallel, series, watch } = require('gulp');
 const browserSync = require('browser-sync').create()
 const autoprefixer = require('autoprefixer')
 const postcss = require('gulp-postcss')
-const babel = require('gulp-babel')
 const concat = require('gulp-concat')
 const easyImport = require('postcss-easy-import')
 const nested = require('postcss-nested')
 
-gulp.task('js', function () {
-  return gulp.src([
+function js(cb) {
+  src([
     'node_modules/feather-icons/dist/feather.js',
-    'script.js'
+    './script.js'
   ])
-    .pipe(babel())
     .pipe(concat('script.js'))
-    .pipe(gulp.dest('public'));
-});
+    .pipe(dest('public'));
 
-gulp.task('js-watch', ['js'], function (done) {
-  browserSync.reload();
-  done();
-});
+  cb();
+}
 
-gulp.task('css', function () {
-  return gulp.src('style.css')
+function css(cb) {
+  src('style.css')
     .pipe(postcss([
       easyImport,
       nested,
-      autoprefixer({
-        browsers: ['last 3 versions']
-      }),
+      autoprefixer(),
     ]))
-    .pipe(gulp.dest('public'))
-    .pipe(browserSync.stream())
-});
+    .pipe(dest('public'))
+    .pipe(browserSync.stream());
 
-gulp.task('default', ['js', 'css'], function () {
+  cb();
+}
+
+exports.default = series(parallel(js, css), function serve(cb) {
   browserSync.init({
     port: 3001,
     ui: false
   });
 
-  gulp.watch('style.css', ['css']);
-  gulp.watch('script.js', ['js-watch']);
-});
+  watch('style.css', css);
+  watch('script.js', series(js, function reload(_cb) {
+    browserSync.reload();
+    _cb();
+  }));
 
-gulp.task('build', ['js', 'css'], function() {
-  console.log('Run `yarn serve` to launch Ouistiti!')
+  cb();
+})
+
+exports.build = series(parallel(js, css), function success (cb) {
+  console.log('Run `yarn serve` to launch Ouistiti!');
+  cb();
 });
