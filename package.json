@@ -14,7 +14,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.8",
     "browser-sync": "^2.23.6",
-    "express": "^4.16.2",
+    "express": "^4.19.2",
     "feather-icons": "^4.6.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
