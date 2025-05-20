@@ -19,7 +19,7 @@
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^9.0.1",
-    "multer": "^1.4.5-lts.1",
+    "multer": "^2.0.0",
     "nodemon": "^2.0.19",
     "normalize.css": "^8.0.0",
     "postcss": "^8.4.31",
