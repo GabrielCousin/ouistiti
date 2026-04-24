@@ -22,7 +22,7 @@
     "multer": "^2.1.0",
     "nodemon": "^2.0.19",
     "normalize.css": "^8.0.0",
-    "postcss": "^8.4.31",
+    "postcss": "^8.5.10",
     "postcss-easy-import": "^4.0.0",
     "postcss-nested": "^5.0.6",
     "pug": "^3.0.3"
